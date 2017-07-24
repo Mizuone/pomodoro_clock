@@ -4,10 +4,126 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>Pomodoro Dashboard</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.4/angular-material.min.css" type="text/css" rel="stylesheet">
+    <link href="./css/pomodoro-styling.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular-animate.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular-aria.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+
+    <!--NG App-->
+    <script type="text/javascript" src="./src/app.js"></script>
+
+    <!--Services-->
+    <script type="text/javascript" src="./src/services/localstorage_manager-service.js"></script>
+
+    <!--Controllers-->
+    <script type="text/javascript" src="./src/controllers/pomodoro-dashboard-controller.js"></script>
+    <script type="text/javascript" src="./src/controllers/tasks-controller.js"></script>
+    <script type="text/javascript" src="./src/controllers/sideNav-controller.js"></script>
+
+
   </head>
-  <body>
-    <h1>The Dream</h1>
+  <body ng-app="pomodoro">
+    <div ng-controller="pomodoro-dashboard" layout="column" ng-cloak id="pomodoro_dashboard">
+      <section layout="row" flex class="dashboard-content">
+
+            <md-sidenav
+              class="md-sidenav-left"
+              md-component-id="left"
+              md-is-locked-open="$mdMedia('gt-md')"
+              md-whiteframe="4">
+
+            <md-toolbar class="md-theme-indigo">
+              <h1 class="md-toolbar-tools">Dashboard</h1>
+            </md-toolbar>
+            <md-content layout-padding ng-controller="sideNav" class="nav-content">
+              <md-button ng-click="close()" class="md-primary" hide-gt-md>
+                Close Sidenav Left
+              </md-button>
+
+                <div layout="row" class="nav-container">
+                  <a href="" class="nav-item current-active">
+                    <div flex class="nav-text text-white">
+                      <i class="fa fa-user-circle sn-profile-icon" aria-hidden="true"></i> Profile
+                    </div>
+                  </a>
+                </div>
+
+                <div layout="row" class="nav-container">
+                  <a href="" class="nav-item">
+                    <div flex class="nav-text text-black">
+                      <i class="fa fa-clock-o sn-timer-icon" aria-hidden="true"></i>Pomodoro Timer
+                    </div>
+                  </a>
+                </div>
+
+                <div layout="row" class="nav-container">
+                  <a href="" class="nav-item">
+                    <div flex class="nav-text text-black">
+                      <i class="fa fa-cog sn-cog-icon" aria-hidden="true"></i>Settings
+                    </div>
+                  </a>
+                </div>
+
+            </md-content>
+
+          </md-sidenav>
+
+      <md-content flex layout-padding class="dashboard-container">
+
+        <div class="card-container">
+          <div ng-controller="tasks" class="dashboard-card slightShadow">
+            <h3 class="card-heading">Tasks Completed - {{ tasksCompleted }}</h3>
+            <p>Avg Per Week - {{ avgTasksWeek }}</p>
+            <p>Day of Most - {{ dayOfMostTask }}</p>
+            <p>Project With Most -  {{ projectMostTasks }}</p>
+          </div>
+
+          <div class="dashboard-card slightShadow">
+            <h3 class="card-heading">Sub Tasks</h3>
+          </div>
+          <div class="dashboard-card slightShadow">
+            <h3 class="card-heading">Pomodoros</h3>
+          </div>
+          <div class="dashboard-card slightShadow">
+            <h3 class="card-heading">Active Project</h3>
+          </div>
+        </div>
+
+        <div class="card-container">
+          <div class="card-lg slightShadow">
+            <h3 class="card-heading">Tasks</h3>
+          </div>
+
+          <div class="card-lg slightShadow">
+            <h3 class="card-heading">Projects</h3>
+          </div>
+        </div>
+
+
+        <div layout-xs="column" layout="row" class="md-padding">
+
+
+          <div>
+            <md-button ng-click="toggleLeft()"
+              class="md-primary" hide-gt-md>
+              Toggle left
+            </md-button>
+          </div>
+        </div>
+
+        <div flex></div>
+
+      </md-content>
+
+      </section>
+    </div>
   </body>
 </html>
