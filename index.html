@@ -26,6 +26,8 @@
     <!--Controllers-->
     <script type="text/javascript" src="./src/controllers/pomodoro-dashboard-controller.js"></script>
     <script type="text/javascript" src="./src/controllers/tasks-controller.js"></script>
+    <script type="text/javascript" src="./src/controllers/subtasks-controller.js"></script>
+    <script type="text/javascript" src="./src/controllers/dashboard-pomodoro-controller.js"></script>
     <script type="text/javascript" src="./src/controllers/sideNav-controller.js"></script>
 
 
@@ -86,11 +88,14 @@
             <p>Project With Most -  {{ projectMostTasks }}</p>
           </div>
 
-          <div class="dashboard-card slightShadow">
-            <h3 class="card-heading">Sub Tasks</h3>
+          <div ng-controller="subtasks" class="dashboard-card slightShadow">
+            <h3 class="card-heading">Sub Tasks - {{ subTasksLeft }}</h3>
+            <p> Completed Sub Tasks - {{ subTasksCompleted }}</p>
           </div>
-          <div class="dashboard-card slightShadow">
-            <h3 class="card-heading">Pomodoros</h3>
+          <div ng-controller="dashboard-pomodoro" class="dashboard-card slightShadow">
+            <h3 class="card-heading">Pomodoros Done - {{ totalPomodoros }}</h3>
+            <p>Avg Per Week - {{ avgWeekPomodoro }}</p>
+            <p>Day of Most - {{ dayOfMostPomodoros }}</p>
           </div>
           <div class="dashboard-card slightShadow">
             <h3 class="card-heading">Active Project</h3>
@@ -98,8 +103,11 @@
         </div>
 
         <div class="card-container">
-          <div class="card-lg slightShadow">
+          <div class="card-extra-lg slightShadow">
             <h3 class="card-heading">Tasks</h3>
+            <md-button class="md-fab tasks-add-button" aria-label="Profile">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </md-button>
           </div>
 
           <div class="card-lg slightShadow">

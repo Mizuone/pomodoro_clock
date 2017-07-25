@@ -23,16 +23,22 @@ body, html {
 .card-container{
   display: flex;
 }
-.dashboard-card, .card-lg {
+.dashboard-card, .card-lg, .card-extra-lg {
   flex: 1;
   height: 190px;
   background-color: #fff;
   margin: 25px;
   padding: 10px;
 }
-.card-lg {
+.card-lg, .card-extra-lg {
+  position: relative;
   min-height: 500px;
 }
+
+.card-extra-lg {
+  flex: 2;
+}
+
 .card-heading {
   color: #666;
   font-weight: lighter;
@@ -41,6 +47,17 @@ body, html {
   margin-top: 5px;
   font-size: 16pt;
 }
+
+.card-container .md-fab.tasks-add-button {
+  position: absolute;
+  top: -3.5vh;
+  right: 10px;
+  background-color: #F9A053;
+}
+.card-container .md-fab.md-hue-2.tasks-add-button:hover {
+  background-color: #E47C4A;
+}
+
 /**********       SIDENAV       ***************/
 .nav-container {
   margin: 10px;
