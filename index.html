@@ -28,12 +28,18 @@
     <script type="text/javascript" src="./src/controllers/tasks-controller.js"></script>
     <script type="text/javascript" src="./src/controllers/subtasks-controller.js"></script>
     <script type="text/javascript" src="./src/controllers/dashboard-pomodoro-controller.js"></script>
+    <script type="text/javascript" src="./src/controllers/dashboard-weekly-controller.js"></script>
     <script type="text/javascript" src="./src/controllers/sideNav-controller.js"></script>
 
 
   </head>
   <body ng-app="pomodoro">
     <div ng-controller="pomodoro-dashboard" layout="column" ng-cloak id="pomodoro_dashboard">
+      <div class="addtask-overlay">
+        <div class="addtask-container">
+          
+        </div>
+      </div>
       <section layout="row" flex class="dashboard-content">
 
             <md-sidenav
@@ -102,17 +108,36 @@
           </div>
         </div>
 
-        <div class="card-container">
+        <div ng-controller="dashboard-weekly" class="card-container">
           <div class="card-extra-lg slightShadow">
-            <h3 class="card-heading">Tasks</h3>
-            <md-button class="md-fab tasks-add-button" aria-label="Profile">
+            <md-button class="md-fab tasks-add-button" aria-label="Profile" ng-click="addTask();">
                 <i class="fa fa-plus" aria-hidden="true"></i>
             </md-button>
+            <div class="tasks-weekly-container">
+              <div class="tasks-day-container tasks-monday">
+                <h3>Monday</h3>
+              </div>
+              <div class="tasks-day-container tasks-tuesday">
+                <h3>Tuesday</h3>
+              </div>
+              <div class="tasks-day-container tasks-wednesday">
+                <h3>Wednesday</h3>
+              </div>
+              <div class="tasks-day-container tasks-thursday">
+                <h3>Thursday</h3>
+              </div>
+              <div class="tasks-day-container tasks-friday">
+                <h3>Friday</h3>
+              </div>
+              <div class="tasks-day-container tasks-saturday">
+                <h3>Saturday</h3>
+              </div>
+              <div class="tasks-day-container tasks-sunday">
+                <h3>Sunday</h3>
+              </div>
+            </div>
           </div>
 
-          <div class="card-lg slightShadow">
-            <h3 class="card-heading">Projects</h3>
-          </div>
         </div>
 
 

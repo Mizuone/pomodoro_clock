@@ -13,6 +13,25 @@ body, html {
   box-shadow: 0 1px 2px rgba(0,0,0,0.16), 0 1px 2px rgba(0,0,0,0.23);
 }
 
+/***** OVERLAY *****/
+.addtask-overlay {
+  z-index: 101;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0, 0.5);
+  display: none;
+}
+.addtask-container {
+  display: block;
+  height: 500px;
+  width: 30%;
+  background-color: #fff;
+  margin: auto;
+  margin-top: 12%;
+}
 /**********       Dashboard       ***************/
 
 .dashboard-container {
@@ -36,7 +55,8 @@ body, html {
 }
 
 .card-extra-lg {
-  flex: 2;
+  flex: 4;
+  padding: 0;
 }
 
 .card-heading {
@@ -56,6 +76,27 @@ body, html {
 }
 .card-container .md-fab.md-hue-2.tasks-add-button:hover {
   background-color: #E47C4A;
+}
+
+
+/** TASKS **/
+.tasks-weekly-container {
+  display: flex;
+  height: 100%;
+}
+.tasks-day-container {
+  flex: 1;
+  border-right: 1px solid #bbb;
+  height: 100%;
+}
+.tasks-day-container h3 {
+  text-align: center;
+  color: #999;
+  margin: 0;
+  padding: 15px 0;
+  border-bottom: 1px solid #bbb;
+  font-size: 16px;
+  font-weight: lighter;
 }
 
 /**********       SIDENAV       ***************/
@@ -110,4 +151,8 @@ body, html {
 /**********ANGULAR STYLING OVERRIDES**************/
 .md-toolbar-tools {
   background-color: #F9A053;
+}
+
+.md-button.md-default-theme.md-fab:not([disabled]).md-focused, .md-button.md-fab:not([disabled]).md-focused, .md-button.md-default-theme.md-fab:not([disabled]):hover, .md-button.md-fab:not([disabled]):hover {
+  background-color: #E47C4A;
 }
