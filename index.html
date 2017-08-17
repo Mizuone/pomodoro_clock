@@ -25,6 +25,7 @@
 
     <!--Controllers-->
     <script type="text/javascript" src="./src/controllers/pomodoro-dashboard-controller.js"></script>
+    <script type="text/javascript" src="./src/controllers/addtask-controller.js"></script>
     <script type="text/javascript" src="./src/controllers/tasks-controller.js"></script>
     <script type="text/javascript" src="./src/controllers/subtasks-controller.js"></script>
     <script type="text/javascript" src="./src/controllers/dashboard-pomodoro-controller.js"></script>
@@ -35,11 +36,31 @@
   </head>
   <body ng-app="pomodoro">
     <div ng-controller="pomodoro-dashboard" layout="column" ng-cloak id="pomodoro_dashboard">
-      <div class="addtask-overlay">
+
+      <div class="addtask-overlay" ng-controller="addtask">
         <div class="addtask-container">
-          
+          <div class="addtask-inputs-container">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>New Task Name</label>
+              <input ng-model="taskName">
+            </md-input-container>
+
+            <md-input-container class="md-block">
+              <label>Description</label>
+              <textarea ng-model="taskDescription" md-maxlength="100" rows="5" md-select-on-focus></textarea>
+            </md-input-container>
+
+            <md-input-container class="md-block shorter-input" flex-gt-sm>
+              <label>Time Estimate</label>
+              <input ng-model="timeEstimate">
+            </md-input-container>
+          </div>
+
+          <md-button class="md-raised md-warn addtask-button">Add Task</md-button>
+
         </div>
       </div>
+
       <section layout="row" flex class="dashboard-content">
 
             <md-sidenav

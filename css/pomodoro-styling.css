@@ -13,25 +13,6 @@ body, html {
   box-shadow: 0 1px 2px rgba(0,0,0,0.16), 0 1px 2px rgba(0,0,0,0.23);
 }
 
-/***** OVERLAY *****/
-.addtask-overlay {
-  z-index: 101;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0,0,0, 0.5);
-  display: none;
-}
-.addtask-container {
-  display: block;
-  height: 500px;
-  width: 30%;
-  background-color: #fff;
-  margin: auto;
-  margin-top: 12%;
-}
 /**********       Dashboard       ***************/
 
 .dashboard-container {
@@ -99,6 +80,43 @@ body, html {
   font-weight: lighter;
 }
 
+
+    /***** OVERLAY *****/
+    .addtask-overlay {
+      z-index: 101;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0,0,0, 0.5);
+      display: none;
+    }
+    .addtask-container {
+      position: relative;
+      opacity: 0;
+      height: 500px;
+      width: 30%;
+      background-color: #fff;
+      margin: auto;
+      margin-top: 12%;
+    }
+
+    .addtask-inputs-container {
+      position: relative;
+      top: 18px;
+      margin: 0 auto;
+      width: 75%;
+    }
+
+    .addtask-button {
+      position: absolute;
+      bottom: 4pt;
+      right: 4pt;
+    }
+
+    /***************************************/
+
 /**********       SIDENAV       ***************/
 .nav-container {
   margin: 10px;
@@ -148,7 +166,35 @@ body, html {
 }
 
 
+/**********************ANIMATIONS**********************/
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fadeIn {
+  animation: fadeIn 0.2s ease-in forwards;
+}
 /**********ANGULAR STYLING OVERRIDES**************/
+.shorter-input {
+  width: 109px;
+}
+
+
+md-input-container:not(.md-input-invalid).md-input-focused label {
+  color: #FF5A1B;
+}
+md-input-container:not(.md-input-invalid).md-input-focused .md-input {
+  border-color: #FF5A1B;
+}
+md-input-container textarea.md-input {
+  min-height: 100px;
+  max-height: 100px;
+}
 .md-toolbar-tools {
   background-color: #F9A053;
 }
