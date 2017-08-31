@@ -5,7 +5,7 @@
         getTasksContainer = document.getElementsByClassName('addtask-container')[0];
 
 
-    $scope.addTask = function() {
+    $scope.showAddTask = function() {
 
       getTasksOverlay.style.display = 'block';
       getTasksContainer.classList.add('fadeIn');
@@ -26,6 +26,7 @@
             !targetParent.parentNode.classList.contains('addtask-container')) {
 
           this.style.display = 'none';
+          document.querySelector('.md-select-menu-container.md-active.md-clickable').style.display = 'none';
         }
 
       });

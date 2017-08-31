@@ -117,6 +117,28 @@ body, html {
 
     /***************************************/
 
+
+    /************APPENDED TASK**************/
+
+    .task-container {
+      box-shadow: 0 1px 2px rgba(0,0,0,0.16), 0 1px 2px rgba(0,0,0,0.23);
+    }
+    .monday {
+      background-color: #E3F2FD;
+    }
+    .task-name, .task-description, .task-time {
+      margin: 5px 0;
+      padding: 0 5px;
+    }
+    .task-name, .task-time {
+      color: #999;
+      font-size: 12px;
+    }
+    .task-name {
+      text-align: center;
+    }
+
+    /***************************************/
 /**********       SIDENAV       ***************/
 .nav-container {
   margin: 10px;
@@ -182,6 +204,13 @@ body, html {
 /**********ANGULAR STYLING OVERRIDES**************/
 .shorter-input {
   width: 109px;
+}
+.medium-input {
+  width: 125px;
+}
+
+.md-select-menu-container {
+  z-index: 102;
 }
 
 
