@@ -1,6 +1,5 @@
 (function() {
   angular.module('pomodoro').controller('addtask', ['$scope', 'addtask_manager', 'localstorage_manager', function($scope, addtask_service, localstorage_manager) {
-    //each day will have a different color
     $scope.taskName = '';
     $scope.taskDescription = '';
     $scope.timeEstimate = '';

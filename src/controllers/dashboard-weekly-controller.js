@@ -4,7 +4,6 @@
     var getTasksOverlay = document.getElementsByClassName('addtask-overlay')[0],
         getTasksContainer = document.getElementsByClassName('addtask-container')[0];
 
-
     $scope.showAddTask = function() {
 
       getTasksOverlay.style.display = 'block';
@@ -27,6 +26,7 @@
 
           this.style.display = 'none';
           document.querySelector('.md-select-menu-container.md-active.md-clickable').style.display = 'none';
+
         }
 
       });

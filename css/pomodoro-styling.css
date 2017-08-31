@@ -139,6 +139,7 @@ body, html {
     }
 
     /***************************************/
+
 /**********       SIDENAV       ***************/
 .nav-container {
   margin: 10px;
@@ -212,7 +213,6 @@ body, html {
 .md-select-menu-container {
   z-index: 102;
 }
-
 
 md-input-container:not(.md-input-invalid).md-input-focused label {
   color: #FF5A1B;
