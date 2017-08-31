@@ -22,6 +22,7 @@
 
     <!--Services-->
     <script type="text/javascript" src="./src/services/localstorage_manager-service.js"></script>
+    <script type="text/javascript" src="./src/services/addtask_manager-service.js"></script>
 
     <!--Controllers-->
     <script type="text/javascript" src="./src/controllers/pomodoro-dashboard-controller.js"></script>
@@ -50,13 +51,30 @@
               <textarea ng-model="taskDescription" md-maxlength="100" rows="5" md-select-on-focus></textarea>
             </md-input-container>
 
+<<<<<<< HEAD
             <md-input-container class="md-block shorter-input" flex-gt-sm>
+=======
+            <md-input-container class="md-block medium-input" flex-gt-sm>
+              <label>Day</label>
+              <md-select ng-model="taskDay">
+                <md-option ng-repeat="day in daysObj" value="{{day.day}}">
+                  {{day.day}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+
+            <md-input-container class="md-block medium-input" flex-gt-sm>
+>>>>>>> development
               <label>Time Estimate</label>
               <input ng-model="timeEstimate">
             </md-input-container>
           </div>
 
+<<<<<<< HEAD
           <md-button class="md-raised md-warn addtask-button">Add Task</md-button>
+=======
+          <md-button class="md-raised md-warn addtask-button" ng-click="addTask(taskName, taskDescription, taskDay, timeEstimate)">Add Task</md-button>
+>>>>>>> development
 
         </div>
       </div>
@@ -131,30 +149,51 @@
 
         <div ng-controller="dashboard-weekly" class="card-container">
           <div class="card-extra-lg slightShadow">
-            <md-button class="md-fab tasks-add-button" aria-label="Profile" ng-click="addTask();">
+            <md-button class="md-fab tasks-add-button" aria-label="Profile" ng-click="showAddTask();">
                 <i class="fa fa-plus" aria-hidden="true"></i>
             </md-button>
-            <div class="tasks-weekly-container">
+            <div ng-controller="addtask" class="tasks-weekly-container">
               <div class="tasks-day-container tasks-monday">
                 <h3>Monday</h3>
+                <div ng-repeat="task in taskArrMonday">
+                  <div task></div>
+                </div>
               </div>
               <div class="tasks-day-container tasks-tuesday">
                 <h3>Tuesday</h3>
+                <div ng-repeat="task in taskArrTuesday">
+                  <div task></div>
+                </div>
               </div>
               <div class="tasks-day-container tasks-wednesday">
                 <h3>Wednesday</h3>
+                <div ng-repeat="task in taskArrWednesday">
+                  <div task></div>
+                </div>
               </div>
               <div class="tasks-day-container tasks-thursday">
                 <h3>Thursday</h3>
+                <div ng-repeat="task in taskArrThursday">
+                  <div task></div>
+                </div>
               </div>
               <div class="tasks-day-container tasks-friday">
                 <h3>Friday</h3>
+                <div ng-repeat="task in taskArrFriday">
+                  <div task></div>
+                </div>
               </div>
               <div class="tasks-day-container tasks-saturday">
                 <h3>Saturday</h3>
+                <div ng-repeat="task in taskArrSaturday">
+                  <div task></div>
+                </div>
               </div>
               <div class="tasks-day-container tasks-sunday">
                 <h3>Sunday</h3>
+                <div ng-repeat="task in taskArrSunday">
+                  <div task></div>
+                </div>
               </div>
             </div>
           </div>
