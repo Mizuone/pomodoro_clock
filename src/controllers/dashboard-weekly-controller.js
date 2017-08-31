@@ -6,6 +6,7 @@
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     $scope.addTask = function() {
 
       getTasksOverlay.style.display = 'block';
@@ -13,6 +14,15 @@
 
       removeTaskContainerListener();
 
+=======
+    $scope.showAddTask = function() {
+
+      getTasksOverlay.style.display = 'block';
+      getTasksContainer.classList.add('fadeIn');
+
+      removeTaskContainerListener();
+
+>>>>>>> development
 =======
     $scope.showAddTask = function() {
 
@@ -37,6 +47,10 @@
 
           this.style.display = 'none';
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+          document.querySelector('.md-select-menu-container.md-active.md-clickable').style.display = 'none';
+>>>>>>> development
 =======
           document.querySelector('.md-select-menu-container.md-active.md-clickable').style.display = 'none';
 >>>>>>> development

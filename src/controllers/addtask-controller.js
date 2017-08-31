@@ -1,6 +1,10 @@
 (function() {
 <<<<<<< HEAD
+<<<<<<< HEAD
   angular.module('pomodoro').controller('addtask', ['$scope', function($scope) {
+=======
+  angular.module('pomodoro').controller('addtask', ['$scope', 'addtask_manager', 'localstorage_manager', function($scope, addtask_service, localstorage_manager) {
+>>>>>>> development
 =======
   angular.module('pomodoro').controller('addtask', ['$scope', 'addtask_manager', 'localstorage_manager', function($scope, addtask_service, localstorage_manager) {
 >>>>>>> development
@@ -9,10 +13,13 @@
     $scope.taskDescription = '';
     $scope.timeEstimate = '';
 <<<<<<< HEAD
+<<<<<<< HEAD
   }]).directive('task', function() {
     return {
       templateUrl: './src/directives/task-directive.html'
 =======
+=======
+>>>>>>> development
     $scope.daysObj = [{day: 'Monday'},{day: 'Tuesday'},{day: 'Wednesday'},{day: 'Thursday'},{day: 'Friday'},{day: 'Saturday'},{day: 'Sunday'}];
     $scope.taskDay = $scope.daysObj[0].day;
 
@@ -61,6 +68,9 @@
     return {
       templateUrl: './src/directives/task-directive.html',
       controller: 'addtask'
+<<<<<<< HEAD
+>>>>>>> development
+=======
 >>>>>>> development
     }
   });
