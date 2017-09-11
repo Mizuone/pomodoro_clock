@@ -43,17 +43,17 @@
           <div class="addtask-inputs-container">
             <md-input-container class="md-block" flex-gt-sm>
               <label>New Task Name</label>
-              <input ng-model="taskName">
+              <input id="addtask-taskname" ng-model="taskName">
             </md-input-container>
 
             <md-input-container class="md-block">
               <label>Description</label>
-              <textarea ng-model="taskDescription" md-maxlength="100" rows="5" md-select-on-focus></textarea>
+              <textarea id="addtask-taskdescription" ng-model="taskDescription" md-maxlength="100" rows="5" md-select-on-focus></textarea>
             </md-input-container>
             <md-input-container class="md-block medium-input" flex-gt-sm>
               <label>Day</label>
               <md-select ng-model="taskDay">
-                <md-option ng-repeat="day in daysObj" value="{{day.day}}">
+                <md-option id="addtask-taskday" ng-repeat="day in daysObj" value="{{day.day}}">
                   {{day.day}}
                 </md-option>
               </md-select>
@@ -61,11 +61,12 @@
 
             <md-input-container class="md-block medium-input" flex-gt-sm>
               <label>Time Estimate</label>
-              <input ng-model="timeEstimate">
+              <input id="addtask-timeestimate" ng-model="timeEstimate">
             </md-input-container>
           </div>
 
-          <md-button class="md-raised md-warn addtask-button" ng-click="addTask(taskName, taskDescription, taskDay, timeEstimate)">Add Task</md-button>
+          <md-button class="md-raised md-warn addtask-button" ng-click="addTask(taskName, taskDescription, timeEstimate, taskDay)">Add Task</md-button>
+          <md-button class="md-raised md-warn edittask-button" ng-click="editTask(taskName, taskDescription, timeEstimate, taskDay)">Edit Task</md-button>
 
         </div>
       </div>
@@ -143,7 +144,7 @@
             <md-button class="md-fab tasks-add-button" aria-label="Profile" ng-click="showAddTask();">
                 <i class="fa fa-plus" aria-hidden="true"></i>
             </md-button>
-            <div ng-controller="addtask" class="tasks-weekly-container">
+            <div class="tasks-weekly-container">
               <div class="tasks-day-container tasks-monday">
                 <h3>Monday</h3>
                 <div ng-repeat="task in taskArrMonday">

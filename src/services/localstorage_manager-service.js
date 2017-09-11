@@ -6,6 +6,10 @@
 
       getStorage: function(key) {
 
+        if (key === undefined) {
+            return undefined;
+        }
+
         for (var i = 0, len = localStorage.length; i < len; i++) {
 
           if (localStorage.key(i) === key) {
@@ -27,11 +31,11 @@
 
       setStorage: function(key, contents) {
 
-        if (!localStorage.getItem(key)) {
+        //if (!localStorage.getItem(key)) {
           localStorage.setItem(key, JSON.stringify(contents));
-        } else {
+        /*} else {
           console.log('Identical Key Found', key);
-        }
+        }*/
 
       }
 

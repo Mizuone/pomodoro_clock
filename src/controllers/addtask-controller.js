@@ -1,51 +1,60 @@
 (function() {
-  angular.module('pomodoro').controller('addtask', ['$scope', 'addtask_manager', 'localstorage_manager', function($scope, addtask_service, localstorage_manager) {
+  angular.module('pomodoro').controller('addtask', ['$scope', 'addtask_manager', 'localstorage_manager', '$window', function($scope, addtask_manager, localstorage_manager, $window) {
     $scope.taskName = '';
     $scope.taskDescription = '';
     $scope.timeEstimate = '';
     $scope.daysObj = [{day: 'Monday'},{day: 'Tuesday'},{day: 'Wednesday'},{day: 'Thursday'},{day: 'Friday'},{day: 'Saturday'},{day: 'Sunday'}];
     $scope.taskDay = $scope.daysObj[0].day;
 
-    if (localstorage_manager.getStorage('pomodoro_weeklytasks') !== undefined) {
+    $scope.editTask = function(taskName, taskDescription, timeEstimate, taskDay) {
+      taskDay = taskDay.toLowerCase();
 
-      var taskArr = localstorage_manager.getStorage('pomodoro_weeklytasks');
+      var localStorageName = 'pomodoro_weeklytasks' + taskDay + '';
+          getTaskStorage = localstorage_manager.getStorage(localStorageName),
+          taskMenuId = parseInt(document.getElementsByClassName('task-edit-menu')[0].getAttribute('data-task-id'));
 
-      $scope.taskArrMonday = retrieveByDay('monday', taskArr);
-      $scope.taskArrTuesday = retrieveByDay('tuesday', taskArr);
-      $scope.taskArrWednesday = retrieveByDay('wednesday', taskArr);
-      $scope.taskArrThursday = retrieveByDay('thursday', taskArr);
-      $scope.taskArrFriday = retrieveByDay('friday', taskArr);
-      $scope.taskArrSaturday = retrieveByDay('saturday', taskArr);
-      $scope.taskArrSunday = retrieveByDay('sunday', taskArr);
-      //replace this as it adds to a service
-    } else {
-      localstorage_manager.setStorage('pomodoro_weeklytasks', []);
-    }
+      for (var i = 0, len = getTaskStorage.length; i < len; i++) {
 
-    $scope.addTask = function(taskName, taskDescription, timeEstimate, taskDay, taskArr) {
-      taskArr.push(addtask_manager.addTask(taskName, taskDescription, timeEstimate, taskDay));
+        if (i === taskMenuId) {
+          getTaskStorage[i].taskName = taskName;
+          getTaskStorage[i].taskDescription = taskDescription;
+          getTaskStorage[i].taskDay = taskDay;
+          getTaskStorage[i].timeEstimate = timeEstimate;
+        }
+
+      }
+
+      localstorage_manager.setStorage(localStorageName, getTaskStorage);
 
       closeTaskLightBox();
+
+      $window.location.reload();
+
+    };
+
+    $scope.addTask = function(taskName, taskDescription, timeEstimate, taskDay) {
+
+      taskDay = taskDay.toLowerCase();
+
+      var taskObj = addtask_manager.addTask(taskName, taskDescription, timeEstimate, taskDay),
+          tasksFromLocal = localstorage_manager.getStorage('pomodoro_weeklytasks' + taskDay.toLowerCase());
+
+      tasksFromLocal.push(taskObj);
+
+      localstorage_manager.setStorage('pomodoro_weeklytasks' + taskDay, tasksFromLocal);
+
+      closeTaskLightBox();
+
+      $window.location.reload();
     };
 
 
     function closeTaskLightBox() {
       var getTasksOverlay = document.getElementsByClassName('addtask-overlay')[0];
 
-      document.querySelector('.md-select-menu-container.md-active.md-clickable').style.display = 'none';
+      getTasksOverlay.style.display = 'none';
     }
 
-    function retrieveByDay(day, arr) {
-
-      return dayArr = arr.forEach(function(element) {
-
-        if (element[taskDay].toLowerCase() === day.toLowerCase()) {
-          return element;
-        }
-
-      });
-
-    }
 
   }]).directive('task', function() {
     return {
