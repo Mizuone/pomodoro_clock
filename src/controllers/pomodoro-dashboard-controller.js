@@ -1,13 +1,6 @@
 (function() {
   angular.module('pomodoro').controller('pomodoro-dashboard',['$scope', '$controller' , function($scope, $controller, $timeout, $mdSidenav, $log) {
 
-    // localstorage application standards,
-    // keys will have pomodoro_<identifier>
-    // For now do an indexOf check that KOpomodoro_ is present
-
-
-
-
 
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildToggler('right');

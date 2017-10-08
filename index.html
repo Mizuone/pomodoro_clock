@@ -23,6 +23,7 @@
     <!--Services-->
     <script type="text/javascript" src="./src/services/localstorage_manager-service.js"></script>
     <script type="text/javascript" src="./src/services/addtask_manager-service.js"></script>
+    <script type="text/javascript" src="./src/services/set_variable-service.js"></script>
 
     <!--Controllers-->
     <script type="text/javascript" src="./src/controllers/pomodoro-dashboard-controller.js"></script>
@@ -37,39 +38,6 @@
   </head>
   <body ng-app="pomodoro">
     <div ng-controller="pomodoro-dashboard" layout="column" ng-cloak id="pomodoro_dashboard">
-
-      <div class="addtask-overlay" ng-controller="addtask">
-        <div class="addtask-container">
-          <div class="addtask-inputs-container">
-            <md-input-container class="md-block" flex-gt-sm>
-              <label>New Task Name</label>
-              <input id="addtask-taskname" ng-model="taskName">
-            </md-input-container>
-
-            <md-input-container class="md-block">
-              <label>Description</label>
-              <textarea id="addtask-taskdescription" ng-model="taskDescription" md-maxlength="100" rows="5" md-select-on-focus></textarea>
-            </md-input-container>
-            <md-input-container class="md-block medium-input" flex-gt-sm>
-              <label>Day</label>
-              <md-select ng-model="taskDay">
-                <md-option id="addtask-taskday" ng-repeat="day in daysObj" value="{{day.day}}">
-                  {{day.day}}
-                </md-option>
-              </md-select>
-            </md-input-container>
-
-            <md-input-container class="md-block medium-input" flex-gt-sm>
-              <label>Time Estimate</label>
-              <input id="addtask-timeestimate" ng-model="timeEstimate">
-            </md-input-container>
-          </div>
-
-          <md-button class="md-raised md-warn addtask-button" ng-click="addTask(taskName, taskDescription, timeEstimate, taskDay)">Add Task</md-button>
-          <md-button class="md-raised md-warn edittask-button" ng-click="editTask(taskName, taskDescription, timeEstimate, taskDay)">Edit Task</md-button>
-
-        </div>
-      </div>
 
       <section layout="row" flex class="dashboard-content">
 
@@ -140,6 +108,40 @@
         </div>
 
         <div ng-controller="dashboard-weekly" class="card-container">
+
+          <div class="addtask-overlay">
+            <div class="addtask-container">
+              <div class="addtask-inputs-container">
+                <md-input-container class="taskname md-block" flex-gt-sm>
+                  <label>New Task Name</label>
+                  <input id="addtask-taskname" ng-model="taskName">
+                </md-input-container>
+
+                <md-input-container class="taskdescription md-block">
+                  <label>Description</label>
+                  <textarea id="addtask-taskdescription" ng-model="taskDescription" md-maxlength="100" rows="5" md-select-on-focus></textarea>
+                </md-input-container>
+                <md-input-container class="taskday md-block medium-input" flex-gt-sm>
+                  <label>Day</label>
+                  <md-select id="addtask-taskday" ng-model="taskDay">
+                    <md-option ng-repeat="day in daysObj" ng-value="day.day">
+                      {{day.day}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+
+                <md-input-container class="timeestimate md-block medium-input" flex-gt-sm>
+                  <label>Time Estimate</label>
+                  <input id="addtask-timeestimate" ng-model="timeEstimate">
+                </md-input-container>
+              </div>
+
+              <md-button class="md-raised md-warn addtask-button" ng-click="addTask(taskName, taskDescription, timeEstimate, taskDay)">Add Task</md-button>
+              <md-button class="md-raised md-warn edittask-button" ng-click="editTask(taskDay)">Edit Task</md-button>
+
+            </div>
+          </div>
+
           <div class="card-extra-lg slightShadow">
             <md-button class="md-fab tasks-add-button" aria-label="Profile" ng-click="showAddTask();">
                 <i class="fa fa-plus" aria-hidden="true"></i>

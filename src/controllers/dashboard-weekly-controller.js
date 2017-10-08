@@ -1,22 +1,108 @@
 (function() {
-  angular.module('pomodoro').controller('dashboard-weekly', ['$scope', 'localstorage_manager', '$window', function($scope, localstorage_manager, $window) {
+  angular.module('pomodoro').controller('dashboard-weekly', ['$scope', 'localstorage_manager', '$window','set_variable', 'addtask_manager', function($scope, localstorage_manager, $window, set_variable, addtask_manager) {
 
     var getTasksOverlay = document.getElementsByClassName('addtask-overlay')[0],
         getTasksContainer = document.getElementsByClassName('addtask-container')[0];
 
-        console.log($scope.taskArrMonday);
+        $scope.taskName = '';
+        $scope.taskDescription = '';
+        $scope.timeEstimate = '';
+        $scope.taskNameDefault = '';
+        $scope.taskDescriptionDefault = '';
+        $scope.timeEstimateDefault = '';
+        $scope.daysObj = [{day: 'Monday'},{day: 'Tuesday'},{day: 'Wednesday'},{day: 'Thursday'},{day: 'Friday'},{day: 'Saturday'},{day: 'Sunday'}];
+        $scope.taskDay = set_variable.getTaskDay();
+        displayWeeklyTasks();
 
-        $scope.taskArrMonday = setTaskArr('pomodoro_weeklytasksmonday');
-        $scope.taskArrTuesday = setTaskArr('pomodoro_weeklytaskstuesday');
-        $scope.taskArrWednesday = setTaskArr('pomodoro_weeklytaskswednesday');
-        $scope.taskArrThursday = setTaskArr('pomodoro_weeklytasksthursday');
-        $scope.taskArrFriday = setTaskArr('pomodoro_weeklytasksfriday');
-        $scope.taskArrSaturday = setTaskArr('pomodoro_weeklytaskssaturday');
-        $scope.taskArrSunday = setTaskArr('pomodoro_weeklytaskssunday');
+        function clearWeeklyTask(taskId, taskDay) {
+          var localStorageName = 'pomodoro_weeklytasks' + taskDay + ''
+              getWeeklyTasks = localstorage_manager.getStorage(localStorageName);
 
-        $scope.$watchGroup(['taskArrMonday', 'taskArrTuesday', 'taskArrWednesday', 'taskArrThursday', 'taskArrFriday', 'taskArrSaturday', 'taskArrSunday'], function(newVal, oldVal, scope) {
-          console.log(newVal);
-        });
+          getWeeklyTasks.splice(taskId, 1);
+
+          localstorage_manager.setStorage(localStorageName, getWeeklyTasks);
+        }
+
+
+        $scope.editTask = function(taskDay) {
+          taskDay = taskDay.toLowerCase();
+
+          var editTaskDay = getTaskMenu(),
+              taskMenuId = parseInt(document.getElementsByClassName('task-edit-menu')[0].getAttribute('data-task-id'));
+
+          if (taskDay !== editTaskDay.classList[1]) {
+
+            clearWeeklyTask(taskMenuId, editTaskDay.classList[1]);
+            $scope.addTask(getTaskNameFieldValue(), getTaskDescriptionFieldValue(), getTimeEstimateField(), taskDay);
+            removeCurrentTaskMenu();
+            return false;
+
+          }
+
+          var localStorageName = 'pomodoro_weeklytasks' + taskDay + '',
+              getTaskStorage = localstorage_manager.getStorage(localStorageName);
+
+              getTaskStorage[taskMenuId].taskName = getTaskNameFieldValue();
+              getTaskStorage[taskMenuId].taskDescription = getTaskDescriptionFieldValue();
+              getTaskStorage[taskMenuId].taskDay = taskDay;
+              getTaskStorage[taskMenuId].timeEstimate = getTimeEstimateField();
+
+              localstorage_manager.setStorage(localStorageName, getTaskStorage);
+
+
+          clearTaskFields();
+          displayWeeklyTasks();
+          removeCurrentTaskMenu();
+          closeTaskLightBox();
+
+        };
+
+
+        $scope.addTask = function(taskName, taskDescription, timeEstimate, taskDay) {
+
+          taskDay = taskDay.toLowerCase();
+
+          var taskObj = addtask_manager.addTask(taskName, taskDescription, timeEstimate, taskDay),
+              tasksFromLocal = localstorage_manager.getStorage('pomodoro_weeklytasks' + taskDay.toLowerCase());
+
+          tasksFromLocal.push(taskObj);
+
+          localstorage_manager.setStorage('pomodoro_weeklytasks' + taskDay, tasksFromLocal);
+
+          clearTaskFields();
+          displayWeeklyTasks();
+
+          closeTaskLightBox();
+
+        };
+
+
+
+        function clearTaskFields() {
+          $scope.taskName = '';
+          $scope.taskDescription = '';
+          $scope.timeEstimate = '';
+          $scope.taskDay = '';
+        }
+
+        function displayWeeklyTasks() {
+          $scope.taskArrMonday = setTaskArr('pomodoro_weeklytasksmonday');
+          $scope.taskArrTuesday = setTaskArr('pomodoro_weeklytaskstuesday');
+          $scope.taskArrWednesday = setTaskArr('pomodoro_weeklytaskswednesday');
+          $scope.taskArrThursday = setTaskArr('pomodoro_weeklytasksthursday');
+          $scope.taskArrFriday = setTaskArr('pomodoro_weeklytasksfriday');
+          $scope.taskArrSaturday = setTaskArr('pomodoro_weeklytaskssaturday');
+          $scope.taskArrSunday = setTaskArr('pomodoro_weeklytaskssunday');
+        }
+
+
+        function closeTaskLightBox() {
+          var getTasksOverlay = document.getElementsByClassName('addtask-overlay')[0];
+
+          getTasksOverlay.style.display = 'none';
+        }
+
+
 
     function setTaskArr(localStorageName) {
 
@@ -29,7 +115,7 @@
 
     }
 
-    document.getElementsByTagName('body')[0].addEventListener('click', dashBoardWeeklyTasksEvents);
+    document.getElementsByTagName('body')[0].addEventListener('click', dashBoardWeeklyTasksEvents, false);
 
     function getTaskMenu() {
       return document.querySelector('.task-edit-menu');
@@ -75,54 +161,102 @@
         taskMenu.style.left = event.clientX + 'px';
         taskMenu.innerHTML = '<p class="task-edit-choice task-edit"><span><i class="fa fa-pencil-square-o float-left" aria-hidden="true"></i></span>Edit Task </p> <p class="task-edit-choice task-delete"> <span><i class="fa fa-trash-o float-left" aria-hidden="true"></i></span> Delete Task</p>';
 
-        document.getElementsByClassName('task-delete')[0].addEventListener('click', deleteTask);
-        document.getElementsByClassName('task-edit')[0].addEventListener('click', editTask);
+        document.getElementsByClassName('task-delete')[0].addEventListener('click', deleteTask, false);
+        document.getElementsByClassName('task-edit')[0].addEventListener('click', editTask, false);
 
       }
 
+    }
+
+    function capitalize(str) {
+    	return str.charAt(0).toUpperCase() + str.substring(1);
     }
 
     function removeBlankTasks() {
       var localStorageArr = [];
     }
 
-    function editTask() {
-      $scope.showAddTask();
+    function getTaskNameFieldValue() {
+      return document.getElementById('addtask-taskname').value;
+    }
+    function getTaskDescriptionFieldValue() {
+      return document.getElementById('addtask-taskdescription').value;
+    }
+    function getTimeEstimateField() {
+      return document.getElementById('addtask-timeestimate').value;
+    }
 
-      //display edit button
+    function editTask(event) {
+      event.stopPropagation();
 
       var taskNameField = document.getElementById('addtask-taskname'),
           taskDescriptionField = document.getElementById('addtask-taskdescription'),
           taskDayField = document.getElementById('addtask-taskday'),
           taskTimeEstimateField = document.getElementById('addtask-timeestimate'),
+          taskNameClass = document.getElementsByClassName('taskname')[0],
+          taskDescriptionClass = document.getElementsByClassName('taskdescription')[0],
+          taskTimeEstimateClass = document.getElementsByClassName('timeestimate')[0],
           taskMenu = getTaskMenu(),
           taskId = parseInt(taskMenu.getAttribute('data-task-id')),
           taskDay = taskMenu.className.split(' ').pop(),
           getTaskStorage = localstorage_manager.getStorage('pomodoro_weeklytasks'+ taskDay +'');
 
-      for (var i = 0, len = getTaskStorage.length; i < len; i++) {
+      taskNameField.value = getTaskStorage[taskId].taskName;
+      taskDescriptionField.value = getTaskStorage[taskId].taskDescription;
+      taskTimeEstimateField.value = getTaskStorage[taskId].timeEstimate;
 
-        if (i === taskId) {
-            taskNameField.value = getTaskStorage[i].taskName;
-            taskDescriptionField.value = getTaskStorage[i].taskDescription;
-            taskDayField.value = getTaskStorage[i].taskDay;
-            taskTimeEstimateField.value = getTaskStorage[i].timeEstimate;
-        }
+      // Check for not empty string in a field and appends a class to raise label on input box
+      appendValueInInput(taskNameField, taskNameClass);
+      appendValueInInput(taskDescriptionField, taskDescriptionClass);
+      appendValueInInput(taskTimeEstimateField, taskTimeEstimateClass);
 
-      }
+      toggleButton('addtask-button', true);
+      toggleButton('edittask-button', false);
+      showTaskMenu();
 
-
-      //populate each field with the information of the task that was clicked
     }
 
-    function deleteTask() {
+    function appendValueInInput(parentContainer, childContainer) {
+
+      removeClass(childContainer, 'md-input-has-value');
+
+      if (parentContainer.value !== '') {
+        childContainer.classList.add('md-input-has-value');
+      }
+
+    }
+
+    function removeClass(container, classToRemove) {
+
+        if (container.classList.contains(classToRemove)) {
+            container.classList.remove(classToRemove);
+        }
+
+    }
+
+    function toggleButton(container, hide) {
+      var containerElement = document.getElementsByClassName(container)[0];
+
+      if (hide && !containerElement.classList.contains('hide-container')) {
+          containerElement.classList.add('hide-container');
+          containerElement.classList.remove('show-container')
+      }
+      if (!hide && !containerElement.classList.contains('show-container')) {
+          containerElement.classList.remove('hide-container');
+          containerElement.classList.add('show-container')
+      }
+
+    }
+
+
+    function deleteTask(event) {
+      event.stopPropagation;
+
       var taskMenu = getTaskMenu(),
           taskId = taskMenu.getAttribute('data-task-id'),
           taskDay = taskMenu.className.split(' ').pop(),
           taskDayContainer = document.querySelector('.tasks-'+ taskDay +''),
           taskDayChild = taskDayContainer.getElementsByClassName(taskDay);
-
-          console.log(taskDayChild);
 
       for (var i = 0, len = taskDayChild.length; i < len; i++) {
 
@@ -178,13 +312,21 @@
 
     }
 
-    $scope.showAddTask = function() {
-
+    function showTaskMenu() {
       getTasksOverlay.style.display = 'block';
       getTasksContainer.classList.add('fadeIn');
 
       document.getElementById('addtask-taskname').focus();
       removeTaskContainerListener();
+    }
+
+
+    $scope.showAddTask = function() {
+
+      toggleButton('edittask-button', true);
+      toggleButton('addtask-button', false);
+
+      showTaskMenu();
 
     };
 
@@ -199,6 +341,8 @@
             !targetParent.classList.contains('addtask-container') &&
             !targetParent.parentNode.classList.contains('addtask-container')) {
 
+          removeCurrentTaskMenu();
+
           this.style.display = 'none';
 
         }
@@ -207,6 +351,11 @@
 
     }
 
-  }]);
+  }]).directive('task', function() {
+    return {
+      templateUrl: './src/directives/task-directive.html',
+      controller: 'dashboard-weekly'
+    }
+  });
 
 })();

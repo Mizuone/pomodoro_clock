@@ -239,7 +239,14 @@ body, html {
 .row-underline {
   border-bottom: #666 1px solid;
 }
+/**********************CLASS OVERRIDES******************/
 
+.show-container {
+  display: block;
+}
+.hide-container {
+  display: none;
+}
 
 /**********************ANIMATIONS**********************/
 
